@@ -1,10 +1,17 @@
-# Dockerfile
-FROM votre_image_web
+# Utilisez une image de base adaptée à Python
+FROM python:3.9
 
-# Installez les dépendances nécessaires
-RUN apt-get update && apt-get install -y git
+# Créez et définissez le répertoire de travail
+WORKDIR /app
 
-# Copiez le code source dans l'image
+# Copiez les fichiers de votre application (incluant le fichier requirements.txt)
 COPY . /app
 
-WORKDIR /app
+# Installez les dépendances
+RUN pip install -r requirements.txt
+
+# Exposez le port sur lequel Flask s'exécutera
+EXPOSE 5000
+
+# Commande pour exécuter l'application Flask
+CMD ["flask", "run", "--host=0.0.0.0"]
